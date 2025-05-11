@@ -1,0 +1,31 @@
+#!/bin/bash
+
+max=100
+min=5
+
+get_current_brightness() {
+  echo $(($(brightnessctl g) * 100 / $(brightnessctl m)))
+}
+
+set_brightness() {
+  new_brightness=$1
+
+  if [ "$new_brightness" -lt "$min" ]; then
+    new_brightness=$min
+  fi
+
+  if [ "$new_brightness" -mt "$max" ]; then
+    new_brightness=$max
+  fi
+
+  brightnessctl set $new_brightness%
+}
+
+case "$1" in
+  "up")
+  set_brightness $(($(get_current_brightness) + 5)) ;;
+
+  "down")
+  set_brightness $(($(get_current_brightness) - 5)) ;;
+esac
+

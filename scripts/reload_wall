@@ -1,0 +1,4 @@
+#!/bin/bash
+swww img ~/.cache/usr/wall.png --transition-fps 60 --transition-type any --transition-duration 1.5 &&
+wal -i ~/.cache/usr/wall.png --cols16 -n && nautilus
+

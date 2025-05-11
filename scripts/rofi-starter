@@ -1,0 +1,42 @@
+#!/bin/bash
+
+rofi_command(){
+  rofi -dmenu -i -config "$HOME/.config/rofi/config.rasi"
+}
+
+search="Search"
+bluetooth="Bluetooth"
+power="Power"
+wifi="Network"
+wall="WallPaper"
+quit="Quit"
+
+
+options="$search\n$bluetooth\n$wifi\n$power\n$wall\n$quit"
+
+chosen="$(echo -e "$options" | rofi_command)"
+
+case $chosen in
+"$search")
+  # rofi -show combi -modes combi -combi-modes "window,drun,run"
+  rofi -show drun
+  ;;
+"$bluetooth")
+  rofi-bluetooth
+  ;;
+"$power")
+  rofi-power
+  ;;
+"$wifi")
+  network_manager
+  ;;
+"$wall")
+  wallPaperSwitcher.sh
+  ;;
+"$quit")
+  exit
+  ;;
+
+esac
+
+

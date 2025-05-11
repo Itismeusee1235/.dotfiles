@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+#
+# Fuzzy find through dotfiles and scripts
+
+fd . ~/dotfiles \
+  --max-depth 3 \
+  --type f \
+  --exclude '*/foot/themes/*' \
+  --exclude '*/.git/*' \
+  --color=always |
+  fzf \
+    --ansi \
+    --border=rounded \
+    --preview-window=right:60% \
+    --no-sort \
+    --margin=5% \
+    --height=100% \
+    --preview='bat {} --color=always -p' |
+  xargs -r -o nvim

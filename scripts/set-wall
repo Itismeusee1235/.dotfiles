@@ -1,0 +1,18 @@
+#!/bin/bash
+
+default=$HOME/Pictures/Wallpapers/CrazyGod.png
+
+if wal -i "$1" --cols16 -n -e; then
+  magick "$1" ~/.cache/usr/wall.png &&
+
+  swww img "$1" --transition-fps 60 --transition-type any --transition-duration 1.5 --outputs eDP-1
+  swww img "$1" --transition-fps 60 --transition-type any --transition-duration 1.5 --outputs HDMI-A-1
+else
+  wal -i "$default" --cols16 -n -e
+  magick "$default" ~/.cache/usr/wall.png &&
+
+  swww img "$default" --transition-fps 60 --transition-type any --transition-duration 1.5 --outputs eDP-1
+  swww img "$default" --transition-fps 60 --transition-type any --transition-duration 1.5 --outputs HDMI-A-1
+fi
+
+

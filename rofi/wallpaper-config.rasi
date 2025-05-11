@@ -1,0 +1,47 @@
+@import "~/.config/rofi/config.rasi"
+
+/* ---- Configuration ---- */ 
+configuration {
+  modi: "drun";
+}
+
+window {
+  width: 60%;
+}
+
+/* ---- Imagebox ---- */
+imagebox {
+  orientation: vertical;
+  children:
+    [ "entry", "listbox"];
+}
+
+
+entry {
+  expand: false;
+  placeholder: "Choose Wallpaper";
+}
+
+/* ---- Listview ---- */
+listview {
+  columns: 4;
+  lines: 3;
+}
+
+/* ---- Element ---- */
+element {
+  orientation: vertical;
+  padding: 1px;
+  spacing: 1px;
+  border-radius: 2.5px;
+}
+
+element-icon {
+  size: 20%;
+}
+
+element-text {
+  font: "Meslo_Nerd_Font 10";
+  horizontal-align: 0.5;
+}
+

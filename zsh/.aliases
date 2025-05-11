@@ -1,0 +1,11 @@
+
+alias la='ls -al --color'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias lf='y'
+alias cl='clear'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+export PATH="$PATH:/home/fenrir/.local/bin"
+export MANPAGER="nvim +Man!"
+. "$HOME/.cargo/env"

@@ -1,0 +1,56 @@
+@theme "/home/fenrir/.cache/wal/colors-rofi-dark2.rasi"
+
+configuration {
+	modes: "drun,window,run";
+	show-icons: false;
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+
+*{
+  background-color: rgba(0,0,0,0);
+}
+
+#window {
+  background-color: @bg;
+
+  border-radius: 50px;
+  padding: 2ch;
+ // border: 0px;
+}
+
+#mainbox {
+  foreground: @foreground;
+}
+
+#element {
+  orientation: horizontal;
+  children: [element-icon, element-text];
+  spacing: 5px;
+}
+
+element-icon, element-text {
+}
+
+element-icon {
+  sie: 50%;
+}
+
+#mainbox {
+  spacing: 5px;
+  children: [mode-switcher, inputbar, listview];
+}
+
+#listview {
+  dynamic: true;
+  lines: 15;
+}
+
+#mode-switcher {
+}
