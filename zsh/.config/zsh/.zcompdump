@@ -1,4 +1,4 @@
-#files: 1180	version: 5.9
+#files: 1150	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -95,7 +95,6 @@ _comps=(
 'bindkey' '_bindkey'
 'bison' '_bison'
 'bitcoin-cli' '_bitcoin-cli'
-'bluetooth' '_tlp-radio-device'
 'bluetoothctl' '_bluetoothctl'
 'bmake' '_make'
 'bogofilter' '_bogofilter'
@@ -172,7 +171,6 @@ _comps=(
 'chattr' '_chattr'
 'chcon' '_chcon'
 'chdir' '_cd'
-'checkupdates' '_checkupdates'
 'chfn' '_users'
 'chgrp' '_chown'
 'chimera' '_webbrowser'
@@ -304,8 +302,6 @@ _comps=(
 'domainname' '_yp'
 'do-release-upgrade' '_do-release-upgrade'
 'dos2unix' '_dos2unix'
-'dotnet' '_dotnet'
-'downgrade' '_downgrade'
 'drill' '_drill'
 'dropbox' '_dropbox'
 'dropdb' '_pgsql_utils'
@@ -406,7 +402,6 @@ _comps=(
 'fixwpps' '_psutils'
 'fixwwps' '_psutils'
 'flac' '_flac'
-'flatpak' '_flatpak'
 'fleetctl' '_fleetctl'
 'flex' '_flex'
 'flex++' '_flex'
@@ -487,7 +482,6 @@ _comps=(
 'ggetopt' '_getopt'
 'ggrep' '_grep'
 'ggv' '_gnome-gv'
-'gh' '_gh'
 'ghc' '_ghc'
 'ghci' '_ghc'
 'ghc-pkg' '_ghc'
@@ -735,10 +729,7 @@ _comps=(
 'jq' '_jq'
 'jrnl' '_jrnl'
 'kak' '_kak'
-'kcmshell5' '_systemsettings'
-'kcmshell6' '_systemsettings'
 'kdeconnect-cli' '_kdeconnect'
-'kde-inhibit' '_kde-inhibit'
 'kernel-install' '_kernel-install'
 'keystone' '_openstack'
 'keytool' '_java'
@@ -746,20 +737,14 @@ _comps=(
 'kill' '_kill'
 'killall' '_killall'
 'killall5' '_killall'
-'kinfocenter' '_systemsettings'
 'kioclient' '_kfmclient'
 'kitchen' '_kitchen'
 'kitty' '_kitty'
 'knife' '_knife'
 'knock' '_knock'
 'konqueror' '_webbrowser'
-'konsole' '_konsole'
-'konsoleprofile' '_konsole'
 'kpartx' '_kpartx'
 'kpdf' '_pdf'
-'kqml' '_kqml'
-'krunner' '_krunner'
-'kscreen-doctor' '_kscreen-doctor'
 'ksh' '_sh'
 'ksh88' '_sh'
 'ksh93' '_sh'
@@ -969,7 +954,6 @@ _comps=(
 'new' '_mh'
 'newgrp' '_groups'
 'next' '_mh'
-'nfc' '_tlp-radio-device'
 'nft' '_nftables'
 'nginx' '_nginx'
 'ngrep' '_ngrep'
@@ -1016,23 +1000,14 @@ _comps=(
 'p4' '_perforce'
 'p4d' '_perforce'
 'pacat' '_pulseaudio'
-'paccache' '_paccache'
-'pacdiff' '_pacdiff'
-'pacignore' '_pacignore'
 'pack' '_pack'
 'packf' '_mh'
-'paclist' '_paclist'
-'paclog-pkglist' '_paclog-pkglist'
 'pacman' '_pacman'
 'pacman-conf' '_pacman'
 'pacman-key' '_pacman'
 'pacman.static' '_pacman'
 'pacmd' '_pulseaudio'
-'pacscripts' '_pacscripts'
-'pacsearch' '_pacsearch'
-'pacsort' '_pacsort'
 'pactl' '_pulseaudio'
-'pactree' '_pactree'
 'padsp' '_pulseaudio'
 'pandoc' '_pandoc'
 'paplay' '_pulseaudio'
@@ -1043,6 +1018,7 @@ _comps=(
 'paste' '_paste'
 'pasuspender' '_pulseaudio'
 'patch' '_patch'
+'patchelf' '_patchelf'
 'patool' '_patool'
 'pax' '_pax'
 'pcat' '_pack'
@@ -1096,8 +1072,6 @@ _comps=(
 'pkginfo' '_pkginfo'
 'pkgrm' '_pkgrm'
 'pkill' '_pgrep'
-'plasmashell' '_plasmashell'
-'plasmoidviewer' '_plasmoidviewer'
 'play' '_play'
 'playerctl' '_playerctl'
 'pldd' '_pids'
@@ -1176,12 +1150,12 @@ _comps=(
 'qdbus' '_qdbus'
 'qiv' '_qiv'
 'qmk' '_qmk'
+'qpdf' '_qpdf'
 'quilt' '_quilt'
 'r' '_fc'
 'rails' '_rails'
 'rake' '_rake'
 'ralio' '_ralio'
-'rankmirrors' '_rankmirrors'
 'ranlib' '_ranlib'
 'rar' '_rar'
 'rc' '_sh'
@@ -1241,6 +1215,7 @@ _comps=(
 'rmlint.sh' '_rmlint'
 'rmm' '_mh'
 'rmmod' '_rmmod'
+'ronn' '_ronn'
 'route' '_route'
 'rrdtool' '_rrdtool'
 'rsh' '_rlogin'
@@ -1257,8 +1232,6 @@ _comps=(
 'ruby-mri' '_ruby'
 'run0' '_run0'
 'run-help' '_run-help'
-'run-on-ac' '_tlp-run-on'
-'run-on-bat' '_tlp-run-on'
 'rup' '_hosts'
 'rusage' '_precommand'
 'rview' '_vim'
@@ -1290,6 +1263,8 @@ _comps=(
 'seaf-cli' '_seafile'
 'sed' '_sed'
 'senlin' '_openstack'
+'sensors' '_sensors'
+'sensors-detect' '_sensors-detect'
 'seq' '_seq'
 'serialver' '_java'
 'service' '_service'
@@ -1352,7 +1327,6 @@ _comps=(
 'sqlite' '_sqlite'
 'sqlite3' '_sqlite'
 'sqsh' '_sqsh'
-'sqv' '_sqv'
 'sr' '_surfraw'
 'srm' '_srm'
 'srptool' '_gnutls'
@@ -1399,8 +1373,6 @@ _comps=(
 'svnliteadmin' '_subversion'
 'swaks' '_swaks'
 'swanctl' '_swanctl'
-'swaync' '_swaync'
-'swaync-client' '_swaync-client'
 'swift' '_swift'
 'swiftc' '_swift'
 'swww' '_swww'
@@ -1423,7 +1395,6 @@ _comps=(
 'systemd-run' '_systemd-run'
 'systemd-tmpfiles' '_systemd-tmpfiles'
 'systemd-tty-ask-password-agent' '_systemd'
-'systemsettings' '_systemsettings'
 'tac' '_tac'
 'tacker' '_openstack'
 'tail' '_tail'
@@ -1442,7 +1413,6 @@ _comps=(
 'tee' '_tee'
 'telnet' '_telnet'
 'tex' '_tex'
-'texdoc' '_texdoc'
 'texi2any' '_texinfo'
 'texi2dvi' '_texinfo'
 'texi2pdf' '_texinfo'
@@ -1461,8 +1431,6 @@ _comps=(
 'tkinfo' '_texinfo'
 'tla' '_tla'
 'tload' '_tload'
-'tlp' '_tlp'
-'tlp-stat' '_tlp-stat'
 'tmux' '_tmux'
 'tmuxinator' '_tmuxinator'
 'tmuxp' '_tmuxp'
@@ -1535,7 +1503,6 @@ _comps=(
 'unwrapdiff' '_patchutils'
 'unxz' '_xz'
 'unzip' '_zip'
-'updpkgsums' '_updpkgsums'
 'upower' '_upower'
 'uptime' '_uptime'
 'urxvt' '_urxvt'
@@ -1650,7 +1617,6 @@ _comps=(
 'whoami' '_nothing'
 'whois' '_whois'
 'whom' '_mh'
-'wifi' '_tlp-radio-device'
 'wiggle' '_wiggle'
 'wipefs' '_wipefs'
 'wl-copy' '_wl-copy'
@@ -1659,7 +1625,6 @@ _comps=(
 'wpa_cli' '_wpa_cli'
 'wpctl' '_wpctl'
 'write' '_users_on'
-'wwan' '_tlp-radio-device'
 'www' '_webbrowser'
 'xargs' '_xargs'
 'xattr' '_attr'
@@ -1770,7 +1735,6 @@ _comps=(
 'zmodload' '_zmodload'
 'zmv' '_zmv'
 'zone' '_hosts'
-'zoxide' '_zoxide'
 'zparseopts' '_zparseopts'
 'zpool' '_zfs'
 'zpty' '_zpty'
@@ -1939,26 +1903,20 @@ autoload -Uz _afew _age _android _archlinux-java _artisan \
             _tsc _ts-node _udisksctl _ufw _uuidgen \
             _virtualbox _vnstat _wemux _wg-quick _xsel \
             _yarn _yfm _zcash-cli _zinit _bluetoothctl \
-            _bootctl _busctl _bwrap _calibre _checkupdates \
-            _code _coredumpctl _curl _dolphin _dotnet \
-            _downgrade _fd _flatpak _gh _hostnamectl \
-            _hyprctl _hyprpm _img2sixel _insmod _journalctl \
-            _kdeconnect _kde-inhibit _kernel-install _kitty _konsole \
-            _kqml _krunner _kscreen-doctor _libinput _localectl \
-            _loginctl _lsmod _luarocks _luarocks-admin _machinectl \
-            _mkinitcpio _mpv _networkctl _ninja _oomctl \
-            _paccache _pacdiff _pacignore _paclist _paclog-pkglist \
-            _pacman _pacscripts _pacsearch _pacsort _pactree \
-            _pip _plasmashell _plasmoidviewer _playerctl _pulseaudio \
-            _rankmirrors _resolvectl _rg _rmmod _run0 \
-            _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files _sqv \
-            _swaync _swaync-client _swww _systemctl _systemd \
-            _systemd-analyze _systemd-delta _systemd-inhibit _systemd-nspawn _systemd-path \
-            _systemd-run _systemd-tmpfiles _systemsettings _texdoc _timedatectl \
-            _tlp _tlp-radio-device _tlp-run-on _tlp-stat _udevadm \
-            _udisks2 _updpkgsums _upower _varlinkctl _wl-copy \
-            _wl-paste _wpctl _yay _yazi _yt-dlp \
-            _zathura _zoxide _cdr _all_labels _all_matches \
+            _bootctl _busctl _bwrap _calibre _coredumpctl \
+            _curl _dolphin _fd _hostnamectl _hyprctl \
+            _hyprpm _img2sixel _insmod _journalctl _kernel-install \
+            _kitty _libinput _localectl _loginctl _lsmod \
+            _luarocks _luarocks-admin _machinectl _mkinitcpio _mpv \
+            _networkctl _ninja _oomctl _pacman _patchelf \
+            _pip _playerctl _pulseaudio _qpdf _resolvectl \
+            _rg _rmmod _ronn _run0 _sd_hosts_or_user_at_host \
+            _sd_machines _sd_outputmodes _sd_unit_files _sensors _sensors-detect \
+            _swww _systemctl _systemd _systemd-analyze _systemd-delta \
+            _systemd-inhibit _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles \
+            _timedatectl _udevadm _udisks2 _upower _varlinkctl \
+            _wl-copy _wl-paste _wpctl _yay _yazi \
+            _yt-dlp _zathura _cdr _all_labels _all_matches \
             _alternative _approximate _arg_compile _arguments _bash_completions \
             _cache_invalid _call_function _combination _complete _complete_debug \
             _complete_help _complete_help_generic _complete_tag _comp_locale _correct \
