@@ -34,4 +34,3 @@ while true; do
     
     waybar_pid=""
 done
-

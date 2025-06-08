@@ -1,0 +1,10 @@
+xhost +local:docker
+
+docker run -it --rm \
+  --gpus all \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  --device /dev/dri \
+  --net=host \
+  --privileged \
+  ros2-humble-gz

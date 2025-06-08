@@ -1,0 +1,17 @@
+#!/bin/bash
+
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+# Get the song title or fallback
+title=$(playerctl metadata --format '{{ title }}' 2>/dev/null || echo "No song playing")
+
+# Function to insert \n every ~30 chars (adjust as needed)
+wrap_text() {
+    local text="$1"
+    local width=30
+    echo "$text" | fold -s -w $width | sed ':a;N;$!ba;s/\n/\\n/g'
+}
+
+wrapped_title=$(wrap_text "$title")
+
+echo -e "$wrapped_title"

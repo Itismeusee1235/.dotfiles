@@ -1,7 +1,7 @@
 wallpaper=$HOME/Pictures/Wallpapers/night.jpg
 
 
-swww init
-sww-daemon --format xrgb
+# swww init
+swww-daemon --format xrgb
 
 

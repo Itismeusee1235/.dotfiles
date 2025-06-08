@@ -1,5 +1,17 @@
-if pgrep -x rofi > /dev/null; then
-  killall  rofi
-else
-  rofi -show window
+#!/bin/bash
+
+# Get list of windows: address + title
+clients=$(hyprctl clients -j | jq -r '.[] | "\(.address) [\(.class)] \(.title)"')
+
+# Show in rofi
+selection=$(echo "$clients" | rofi -dmenu -i -p "Window:")
+
+# Extract address
+address=$(echo "$selection" | awk '{print $1}')
+
+echo "$address"
+
+# Safety: only dispatch if address exists
+if [[ -n "$address" ]]; then
+    hyprctl dispatch focuswindow "address:$address"
 fi

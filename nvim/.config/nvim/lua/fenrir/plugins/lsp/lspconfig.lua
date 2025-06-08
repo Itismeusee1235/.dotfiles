@@ -99,6 +99,11 @@ return {
 					filetypes = { "cpp", "cuda", "c++", "cuh", "cu" },
 				})
 			end,
+			["qmlls"] = function()
+				lspconfig.qmlls.setup({
+					capabilities = capabilities,
+				})
+			end,
 			-- ["pyright"] = function()
 			--   lspconfig["pyright"].setup({
 			--     capabilities = capabilities,

@@ -1,0 +1,8 @@
+
+set recolor-keephue "true"
+# set statusbar-h-padding 5
+# set statusbar-v-padding 2
+set font "monospace 10"
+set selection-clipboard clipboard
+
+map normal i recolor 
