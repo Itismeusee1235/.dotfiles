@@ -104,6 +104,22 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["svls"] = function()
+				lspconfig.svls.setup({
+					capabilities = capabilities,
+					cmd = { "svls" },
+					filetypes = { "verilog", "systemverilog" },
+					root_dir = lspconfig.util.root_pattern(".svls.toml", ".git", "."),
+				})
+			end,
+			-- ["svlangserver"] = function()
+			-- 	lspconfig.svlangserver.setup({
+			-- 		capabilities = capabilities,
+			-- 		cmd = { "svlangserver", "--connection", "stdio" },
+			-- 		filetypes = { "verilog", "systemverilog" },
+			-- 		root_dir = lspconfig.util.root_pattern(".git", "."),
+			-- 	})
+			-- end,
 			-- ["pyright"] = function()
 			--   lspconfig["pyright"].setup({
 			--     capabilities = capabilities,

@@ -5,4 +5,6 @@ set recolor-keephue "true"
 set font "monospace 10"
 set selection-clipboard clipboard
 
-map normal i recolor 
+map i set recolor
+
+

@@ -1,8 +1,10 @@
 
+alias ff='fastfetch'
+
 alias la='ls -al --color'
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
+alias ls='ls -l --color=auto'
 alias lf='y'
+alias grep='grep --color=auto'
 alias cl='clear'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 

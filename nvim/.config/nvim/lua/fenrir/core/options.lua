@@ -7,7 +7,7 @@ opt.number = true
 opt.cursorline = true
 
 -- tabs & indentation
-opt.wrap = true
+opt.wrap = false
 opt.linebreak = true
 opt.tabstop = 2
 opt.shiftwidth = 2
