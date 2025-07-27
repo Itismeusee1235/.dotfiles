@@ -1,0 +1,13 @@
+var1=$(xrandr --listmonitors)
+
+while true; do
+  var2=$(xrandr --listmonitors)
+  if [ "$var1" != "$var2" ]; then
+    echo "no"
+  else
+    echo "yes"
+  fi
+  var1="$var2"
+  sleep 1
+done
+

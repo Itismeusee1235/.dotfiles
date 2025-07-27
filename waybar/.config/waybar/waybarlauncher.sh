@@ -24,6 +24,7 @@ while true; do
     if [ -z "$waybar_pid" ] || ! kill -0 $waybar_pid 2>/dev/null; then
         waybar &
         waybar_pid=$!
+    nautilus
     fi
     
     inotifywait -e modify ${CONFIG_FILES}
