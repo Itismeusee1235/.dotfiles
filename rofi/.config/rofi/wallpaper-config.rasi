@@ -6,26 +6,30 @@ configuration {
 }
 
 window {
-  width: 60%;
+  width: 75%;
 }
 
-/* ---- Imagebox ---- */
-imagebox {
-  orientation: vertical;
-  children:
-    [ "entry", "listbox"];
+mainbox {
+children: 
+  ["inputbar", "listview"];
 }
-
 
 entry {
-  expand: false;
+  expand: true;
   placeholder: "Choose Wallpaper";
+  horizontal-align: 0.5;
+  vertical-align: 0.5;
 }
 
 /* ---- Listview ---- */
 listview {
-  columns: 4;
-  lines: 3;
+  columns: 5;
+  lines: 2;
+  spacing: 20px;
+  flow: horizontal;
+  fixed-width: true;
+  fixed-height: true;
+  cycle: true;
 }
 
 /* ---- Element ---- */
@@ -37,11 +41,15 @@ element {
 }
 
 element-icon {
-  size: 10%;
+  size: 25%;
+  margin: -30px;
 }
+
 
 element-text {
   font: "Meslo_Nerd_Font 10";
   horizontal-align: 0.5;
+  vertical-align: 0.5;
+  padding: 6px;
+  margin: 6px;
 }
-
