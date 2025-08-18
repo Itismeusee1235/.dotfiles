@@ -23,8 +23,8 @@ entry {
 
 /* ---- Listview ---- */
 listview {
-  columns: 5;
-  lines: 2;
+  columns: 6;
+  lines: 1;
   spacing: 20px;
   flow: horizontal;
   fixed-width: true;
@@ -42,7 +42,7 @@ element {
 
 element-icon {
   size: 25%;
-  margin: -30px;
+  margin: -0px;
 }
 
 
