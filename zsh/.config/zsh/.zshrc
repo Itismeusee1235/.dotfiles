@@ -83,4 +83,3 @@ bindkey "^[[3~" delete-char
 export PATH=/opt/cuda/bin/:$PATH
 export LD_LIBRARY_PATH=/opt/cuda/lib64/:$LD_LIBRARY_PATH
 
-

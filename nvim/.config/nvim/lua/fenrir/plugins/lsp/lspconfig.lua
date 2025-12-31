@@ -96,7 +96,7 @@ return {
 			["clangd"] = function()
 				lspconfig["clangd"].setup({
 					capabilities = capabilities,
-					filetypes = { "cpp", "cuda", "c++", "cuh", "cu" },
+					filetypes = { "c", "cpp", "cuda", "c++", "cuh", "cu" },
 				})
 			end,
 			["qmlls"] = function()

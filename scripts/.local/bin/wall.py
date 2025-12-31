@@ -11,7 +11,9 @@ WAL_COMMAND = 'cwal --img "{}" --cols16-mode darken '
 # WAL_COMMAND = 'wal -i "{}" --cols16 -n '
 MAGIC_COMMAND = 'magick "{}" /home/fenrir/.cache/usr/wall.png'
 COPY_COMMAND = 'magick "{}" "{}"'
-SWWW_COMMAND = 'swww img "{}" --transition-fps 60 --transition-type any --transition-duration 1.5 --outputs eDP-1 && swww img "{}" --transition-fps 60 --transition-type any --transition-duration 1.5 --outputs HDMI-A-1 --fill'
+SWWW_COMMAND = (
+    'swww img "{}" --transition-fps 60 --transition-type any --transition-duration 1.5'
+)
 
 
 def gif(file):
@@ -23,7 +25,7 @@ def gif(file):
         + " && "
         + MAGIC_COMMAND.format("/home/fenrir/.cache/usr/wall-back.png")
         + " && "
-        + SWWW_COMMAND.format(file, file)
+        + SWWW_COMMAND.format(file)
     )
     # command = SWWW_COMMAND.format(file, file)
     print()
@@ -41,7 +43,7 @@ def image(file):
         + " && "
         + MAGIC_COMMAND.format(file)
         + " && "
-        + SWWW_COMMAND.format(file, file)
+        + SWWW_COMMAND.format(file)
     )
 
     ret = os.system(command)

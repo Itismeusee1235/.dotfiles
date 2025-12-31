@@ -4,9 +4,11 @@ alias ff='fastfetch'
 alias la='ls -al --color'
 alias ls='ls -l --color=auto'
 alias lf='y'
+alias nv='nvim'
 alias grep='grep --color=auto'
 alias cl='clear'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias getmusic='yt-dlp -f "ba[ext=m4a]" '
 
 export PATH="$PATH:/home/fenrir/.local/bin"
 export MANPAGER="nvim +Man!"
