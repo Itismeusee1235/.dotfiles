@@ -19,6 +19,14 @@ Item {
 
     width: 300
 
+    property int cpuUsage: 0
+    property int memUsage: 0
+    property int temprature: 0
+    property int battery: 0
+    property int brightness: 0
+    property int volume: 0
+    property var muted: false
+
     Rectangle {
         anchors.fill: parent
         opacity: 0.4
@@ -42,48 +50,109 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 5
+
+                    color: colYellow
+                    opacity: 0.5
                     Text {
-                        id: cpu
+                        id: cpuText
+
+                        anchors.centerIn: parent
+                        text: cpuUsage + "%"
+
+                        font {
+                            family: rightBar.fontFamily
+                            pixelSize: rightBar.fontSize
+                        }
                     }
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 5
+
+                    color: colYellow
+                    opacity: 0.5
                     Text {
-                        id: mem
+                        id: memText
+                        anchors.centerIn: parent
+                        text: memUsage + "%"
+
+                        font {
+                            family: rightBar.fontFamily
+                            pixelSize: rightBar.fontSize
+                        }
                     }
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 5
+
+                    color: colYellow
+                    opacity: 0.5
                     Text {
-                        id: temp
+                        id: tempText
+                        anchors.centerIn: parent
+                        text: temprature + "*C"
+
+                        font {
+                            family: rightBar.fontFamily
+                            pixelSize: rightBar.fontSize
+                        }
                     }
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 5
+
+                    color: colYellow
+                    opacity: 0.5
                     Text {
-                        id: sound
+                        id: volumeText
+                        anchors.centerIn: parent
+                        text: volume + "V"
+
+                        font {
+                            family: rightBar.fontFamily
+                            pixelSize: rightBar.fontSize
+                        }
                     }
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 5
+
+                    color: colYellow
+                    opacity: 0.5
                     Text {
-                        id: brightness
+                        id: brightnessText
+                        anchors.centerIn: parent
+                        text: brightness + "L"
+
+                        font {
+                            family: rightBar.fontFamily
+                            pixelSize: rightBar.fontSize
+                        }
                     }
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 5
+
+                    color: colYellow
+                    opacity: 0.5
                     Text {
-                        id: battery
+                        id: batteryText
+                        anchors.centerIn: parent
+                        text: battery + "B"
+
+                        font {
+                            family: rightBar.fontFamily
+                            pixelSize: rightBar.fontSize
+                        }
                     }
                 }
             }
@@ -102,6 +171,15 @@ Item {
                     pixelSize: rightBar.fontSize
                 }
             }
+        }
+    }
+
+    Scope {
+        Process {
+            id: batteryPoller
+        }
+        Process {
+            id: batteryWaiter
         }
     }
 }
