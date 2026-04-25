@@ -2,7 +2,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 25,
+  "height": 35,
   "margin-left": 5,
   "margin-right": 5,
   "margin-top": 5,
@@ -17,17 +17,23 @@
   "modules-center": ["clock"],
 
   "modules-right": [
+    "mpris",
+    "custom/separator",
     "network",
+    "custom/separator",
     // "cpu",
     // "memory",
     "pulseaudio",
+    "custom/separator",
     "temperature",
+    "custom/separator",
     "backlight",
     // "wireplumber",
     // "clock",
-    "battery",
     "custom/separator",
-    "group/custom-group",
+    "battery",
+    // "custom/separator",
+    // "group/custom-group",
     "custom/separator",
     "custom/power"
   ],
@@ -76,6 +82,12 @@
     "icon-size": 16,
     "spacing": 5,
     "show-passive-items": true,
+  },
+
+  "mpris":
+  {
+    "format": "{title}",
+        "preferred-players": ["mpv", "spotify", "firefox", "chromium"]
   },
 
   "clock": {
@@ -134,9 +146,9 @@
   "on-scroll-up": "pamixer -i 5",
   "on-scroll-down": "pamixer -d 5",
   "on-click": "pamixer -t",
-  "format-bluetooth": "{icon} {volume}% 󰂯", //{format_source}",
-  "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
-  "format-muted": "󰖁  {volume}%",
+  "format-bluetooth": "{icon}󰂯 {volume}%", //{format_source}",
+  "format-bluetooth-muted": "󰖁󰂯 {icon}", //{format_source}",
+  "format-muted": "󰖁 {volume}%",
   "format-source": " {volume}%",
   "format-source-muted": "",
   "format-icons": {
@@ -281,10 +293,10 @@
   "battery": {
     "states": {
       "good": 95,
-      "warning": 30,
-      "critical": 15,
+      "warning": 15,
+      "critical": 10,
     },
-    "format": "{capacity}% {icon}",
+    "format": "{icon} {capacity}%",
     "format-charging": "󰂈  {capacity}%",
     "format-plugged": " {capacity}%",
     "format-alt": "{icon} {time}",

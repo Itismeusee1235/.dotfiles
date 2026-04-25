@@ -7,12 +7,12 @@ from PIL import Image
 
 WALLPAPER_FOLDER = "/home/fenrir/Pictures/Wallpapers/"
 DEFAULT_WAL = "/home/fenrir/Pictures/Wallpapers/CrazyGod.png"
-WAL_COMMAND = 'cwal --img "{}" --cols16-mode darken '
+WAL_COMMAND = 'wal -n -i"{}" --cols16 darken '
 # WAL_COMMAND = 'wal -i "{}" --cols16 -n '
 MAGIC_COMMAND = 'magick "{}" /home/fenrir/.cache/usr/wall.png'
 COPY_COMMAND = 'magick "{}" "{}"'
 SWWW_COMMAND = (
-    'swww img "{}" --transition-fps 60 --transition-type any --transition-duration 1.5'
+    'awww img "{}" --transition-fps 60 --transition-type any --transition-duration 1.5'
 )
 
 

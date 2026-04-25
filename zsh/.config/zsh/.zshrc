@@ -5,6 +5,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
 # Yazi Wrapper
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -83,3 +87,6 @@ bindkey "^[[3~" delete-char
 export PATH=/opt/cuda/bin/:$PATH
 export LD_LIBRARY_PATH=/opt/cuda/lib64/:$LD_LIBRARY_PATH
 
+export PATH="$PATH:/home/fenrir/.local/bin"
+export MANPAGER="nvim +Man!"
+. "$HOME/.cargo/env"

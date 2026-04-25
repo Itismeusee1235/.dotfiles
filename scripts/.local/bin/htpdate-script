@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while true; do 
+  if sudo htpdate -s google.com; then
+    echo "Time synced"
+    break
+  else
+    sleep 5
+  fi
+done
+
