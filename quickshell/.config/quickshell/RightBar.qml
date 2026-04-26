@@ -19,12 +19,10 @@ Item {
 
     width: 300
 
-    property int cpuUsage: 0
-    property int memUsage: 0
-    property int temprature: 0
-    property int battery: 0
-    property int brightness: 0
-    property int volume: 0
+    property string temprature: "100"
+    property string battery: "100%"
+    property string brightness: "100%"
+    property string volume: "100%"
     property var muted: false
 
     Rectangle {
@@ -54,46 +52,9 @@ Item {
                     color: colYellow
                     opacity: 0.5
                     Text {
-                        id: cpuText
-
-                        anchors.centerIn: parent
-                        text: cpuUsage + "%"
-
-                        font {
-                            family: rightBar.fontFamily
-                            pixelSize: rightBar.fontSize
-                        }
-                    }
-                }
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    radius: 5
-
-                    color: colYellow
-                    opacity: 0.5
-                    Text {
-                        id: memText
-                        anchors.centerIn: parent
-                        text: memUsage + "%"
-
-                        font {
-                            family: rightBar.fontFamily
-                            pixelSize: rightBar.fontSize
-                        }
-                    }
-                }
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    radius: 5
-
-                    color: colYellow
-                    opacity: 0.5
-                    Text {
                         id: tempText
                         anchors.centerIn: parent
-                        text: temprature + "*C"
+                        text: temprature
 
                         font {
                             family: rightBar.fontFamily
@@ -111,12 +72,17 @@ Item {
                     Text {
                         id: volumeText
                         anchors.centerIn: parent
-                        text: volume + "V"
+                        text: volume
 
                         font {
                             family: rightBar.fontFamily
                             pixelSize: rightBar.fontSize
                         }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: audioMute.running = true
                     }
                 }
                 Rectangle {
@@ -129,7 +95,7 @@ Item {
                     Text {
                         id: brightnessText
                         anchors.centerIn: parent
-                        text: brightness + "L"
+                        text: brightness
 
                         font {
                             family: rightBar.fontFamily
@@ -147,7 +113,7 @@ Item {
                     Text {
                         id: batteryText
                         anchors.centerIn: parent
-                        text: battery + "B"
+                        text: battery
 
                         font {
                             family: rightBar.fontFamily
@@ -177,9 +143,123 @@ Item {
     Scope {
         Process {
             id: batteryPoller
+            running: true
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/batteryFetcher.sh"]
+
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    let txt = this.text.trim();
+                    if (txt != "") {
+                        try {
+                            let data = JSON.parse(txt);
+                            let newBat = data.percent.toString() + "% " + data.icon;
+                            if (rightBar.battery !== newBat)
+                                rightBar.battery = newBat;
+                        } catch (e) {}
+                    }
+                    batteryWaiter.running = false;
+                    batteryWaiter.running = true;
+                }
+            }
         }
         Process {
             id: batteryWaiter
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/batteryWatcher.sh"]
+
+            onExited: {
+                batteryPoller.running = false;
+                batteryPoller.running = true;
+            }
+        }
+
+        Process {
+            id: audioFetcher
+            running: true
+            command: ["zsh", "-ic", "~/.config/quickshell/scripts/audioFetcher.sh"]
+
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    let text = this.text.trim();
+
+                    if (text != "") {
+                        try {
+                            let data = JSON.parse(text);
+                            let newVol = data.volume.toString() + "% " + data.icon;
+                            if (newVol !== rightBar.volume)
+                                rightBar.volume = newVol;
+                        } catch (e) {}
+                    }
+                    audioWaiter.running = false;
+                    audioWaiter.running = true;
+                }
+            }
+        }
+        Process {
+            id: audioWaiter
+            command: ["zsh", "-c", "/home/fenrir/.config/quickshell/scripts/audioWatcher.sh"]
+
+            onExited: {
+                audioFetcher.running = false;
+                audioFetcher.running = true;
+            }
+        }
+
+        Process {
+            id: audioMute
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/audioFetcher.sh --toggle"]
+        }
+
+        Process {
+            id: brightnessFetcher
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/brightnessFetcher.sh"]
+            running: true
+
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    let txt = this.text.trim();
+                    try {
+                        if (txt != "") {
+                            let data = JSON.parse(txt);
+                            let newBri = data.percent + "% " + data.icon;
+                            if (rightBar.brightness !== newBri)
+                                rightBar.brightness = newBri;
+                        }
+                    } catch (e) {}
+                    brightnessWaiter.running = false;
+                    brightnessWaiter.running = true;
+                }
+            }
+        }
+        Process {
+            id: brightnessWaiter
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/brightnessWatcher.sh"]
+            onExited: {
+                brightnessFetcher.running = false;
+                brightnessFetcher.running = true;
+            }
+        }
+
+        Process {
+            id: tempFetcher
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/tempFetcher.sh"]
+            running: true
+
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    let txt = this.text.trim();
+                    rightBar.temprature = " " + txt;
+                }
+            }
+        }
+
+        Timer {
+            interval: 1000
+            running: true
+            repeat: true
+
+            onTriggered: {
+                tempFetcher.running = true;
+            }
         }
     }
 }
