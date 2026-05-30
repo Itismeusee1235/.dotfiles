@@ -1,3 +1,4 @@
+import "."
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
@@ -5,62 +6,88 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-PanelWindow {
-    id: root
-
-    // Theme
-    property color colBg: "#0e201a"
-    property color colFg: "#c2c7c5"
-    property color colMuted: "#444b6a"
-    property color colCyan: "#0db9d7"
-    property color colBlue: "#7aa2f7"
-    property color colYellow: "#e0af68"
-    property string fontFamily: "JetBrainsMono Nerd Font"
-    property int fontSize: 14
-
-    anchors.top: true
-    anchors.left: true
-    anchors.right: true
-    color: "transparent"
-    implicitHeight: 30
-
-    LeftBar {
-        anchors.left: parent.left
-        height: parent.height
-        colBg: root.colBg
-        colFg: root.colFg
-        colMuted: root.colMuted
-        colCyan: root.colCyan
-        colBlue: root.colBlue
-        colYellow: root.colYellow
-        fontFamily: root.fontFamily
-        fontSize: root.fontSize
+ShellRoot {
+    id: main
+    QtObject {
+        id: uiController
+        property var rootWindow: root
     }
 
-    CentreBar {
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: parent.height
-        colBg: root.colBg
-        colFg: root.colFg
-        colMuted: root.colMuted
-        colCyan: root.colCyan
-        colBlue: root.colBlue
-        colYellow: root.colYellow
-        fontFamily: root.fontFamily
-        fontSize: root.fontSize
+    IpcHandler {
+        target: "TopBar"
+
+        function forceReload() {
+            Quickshell.reload(true);
+        }
     }
 
-    RightBar {
-        anchors.right: parent.right
-        height: parent.height
+    QtObject {
+        id: uiTheme
+        property string fontFamily: "JetBrainsMono Nerd Font"
+        property int fontSize: 10
+    }
 
-        colBg: root.colBg
-        colFg: root.colFg
-        colMuted: root.colMuted
-        colCyan: root.colCyan
-        colBlue: root.colBlue
-        colYellow: root.colYellow
-        fontFamily: root.fontFamily
-        fontSize: root.fontSize
+    Variants {
+        model: Quickshell.screens
+
+        delegate: Component {
+            Item {
+                required property var modelData
+
+                PanelWindow {
+                    screen: modelData
+
+                    anchors.top: true
+                    anchors.left: true
+                    anchors.right: true
+                    margins.top: 5
+                    margins.left: 5
+                    margins.right: 5
+
+                    color: "transparent"
+                    implicitHeight: 30
+
+                    LeftBar {
+                        anchors.left: parent.left
+                        height: parent.height
+                        ui: uiController
+                        theme: uiTheme
+                    }
+
+                    CentreBar {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        height: parent.height
+                        ui: uiController
+                        theme: uiTheme
+                    }
+
+                    RightBar {
+
+                        anchors.right: parent.right
+                        height: parent.height
+                        ui: uiController
+                        theme: uiTheme
+                    }
+                }
+
+                PanelWindow {
+                    anchors {
+                        top: true
+                        bottom: true
+                        left: true
+                        right: true
+                    }
+
+                    property bool test: false
+
+                    visible: test
+                    color: "transparent"
+
+                    WlrLayershell.namespace: "wallpaper-selector-parallel"
+                    WlrLayershell.layer: WlrLayer.Overlay
+                    WlrLayershell.keyboardFocus: test ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+                }
+            }
+        }
     }
 }

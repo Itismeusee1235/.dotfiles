@@ -1,3 +1,4 @@
+import "."
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
@@ -8,22 +9,25 @@ import QtQuick.Layouts
 Item {
     id: centreBar
 
-    property color colBg
-    property color colFg
-    property color colMuted
-    property color colCyan
-    property color colBlue
-    property color colYellow
-    property string fontFamily
-    property int fontSize
+    property var rootWindow
+    property var ui
+    property var theme
 
     width: 180
 
     Rectangle {
+        id: centreTrigger
         anchors.fill: parent
-        opacity: 0.4
-        color: colFg
+        opacity: 0.75
+
+        color: Theme.background
         radius: 10
+
+        MouseArea {
+            id: centreTriggerMouse
+            anchors.fill: parent
+            hoverEnabled: true
+        }
     }
 
     RowLayout {
@@ -42,10 +46,10 @@ Item {
                 id: clock
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                color: colMuted
+                color: Theme.on_background
                 font {
-                    family: centreBar.fontFamily
-                    pixelSize: centreBar.fontSize
+                    family: theme.fontFamily
+                    pixelSize: 13
                     bold: true
                 }
             }
@@ -61,10 +65,11 @@ Item {
                 id: date
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                color: colMuted
+                color: Theme.on_background
                 font {
-                    family: centreBar.fontFamily
-                    pixelSize: centreBar.fontSize
+                    family: theme.fontFamily
+
+                    pixelSize: 13
                     bold: true
                 }
             }
@@ -94,6 +99,14 @@ Item {
             repeat: true
 
             onTriggered: clockProcess.running = true
+        }
+        Timer {
+            id: hoverDelay
+            interval: 300
+            running: false
+            repeat: false
+
+            onTriggered: controller.centreBarHovered = false
         }
     }
 }

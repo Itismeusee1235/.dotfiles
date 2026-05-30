@@ -26,6 +26,8 @@ return {
 				"vim",
 				"vimdoc",
 				"gitignore",
+				"markdown",
+				"markdown_inline",
 			},
 
 			highlight = { enable = true },

@@ -7,26 +7,20 @@ import Quickshell.Io
 Item {
     id: leftBar
 
-    property color colBg
-    property color colFg
-    property color colMuted
-    property color colCyan
-    property color colBlue
-    property color colYellow
-    property string fontFamily
-    property int fontSize
-
     width: 245
+
+    property var ui
+    property var theme
 
     Rectangle {
         anchors.fill: parent
-        opacity: 0.4
-        color: colFg
+        opacity: 0.75
+        color: Theme.background
         radius: 10
     }
 
     RowLayout {
-        anchors.fill: parent
+        anchors.centerIn: parent
         anchors.margins: 4
         spacing: 3
 
@@ -34,7 +28,7 @@ Item {
             implicitHeight: 20
             implicitWidth: 20
 
-            color: colYellow
+            color: Theme.primary
             radius: 5
 
             MouseArea {
@@ -46,8 +40,14 @@ Item {
 
             Text {
                 anchors.centerIn: parent
-                color: colMuted
+                color: Theme.on_primary
                 text: " "
+
+                font {
+                    family: theme.fontFamily
+                    pixelSize: theme.fontSize
+                    bold: true
+                }
             }
         }
 
@@ -55,18 +55,15 @@ Item {
         Repeater {
             model: 9
             Item {
-                Layout.preferredWidth: (mouseArea.containsMouse ? 30 : 20)
+                Layout.preferredWidth: 20
                 Layout.preferredHeight: 20
-
-                Behavior on Layout.preferredWidth {
-                    NumberAnimation {
-                        duration: 120
-                        easing: Easing.OutQuart
-                    }
-                }
 
                 property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
                 property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
+
+                property color bgColor: isActive ? Theme.primary : (ws ? Theme.secondary : Theme.tertiary)
+                property color fgColor: isActive ? Theme.on_primary : (ws ? Theme.on_secondary : Theme.on_tertiary)
+                property bool isHovered: (mouseArea.containsMouse)
 
                 Rectangle {
                     anchors.centerIn: parent
@@ -78,24 +75,23 @@ Item {
                         id: mouseArea
                         anchors.fill: parent
                         onClicked: Hyprland.dispatch("workspace " + (index + 1))
-
                         hoverEnabled: true
                     }
                 }
 
                 Rectangle {
                     anchors.fill: parent
-                    color: colYellow
+                    color: isHovered ? Theme.error : bgColor
                     opacity: ws ? 0.8 : 0.3
                     radius: 5
                     Text {
                         anchors.centerIn: parent
 
                         text: index + 1
-                        color: isActive ? root.colCyan : (ws ? root.colBlue : root.colMuted)
+                        color: fgColor
                         font {
-                            family: root.fontFamily
-                            pixelSize: root.fontSize
+                            family: theme.fontFamily
+                            pixelSize: theme.fontSize
                             bold: true
                         }
                     }

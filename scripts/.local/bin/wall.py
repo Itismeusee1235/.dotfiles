@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+
 import os
 import sys
 
@@ -7,49 +8,19 @@ from PIL import Image
 
 WALLPAPER_FOLDER = "/home/fenrir/Pictures/Wallpapers/"
 DEFAULT_WAL = "/home/fenrir/Pictures/Wallpapers/CrazyGod.png"
-WAL_COMMAND = 'wal -n -i"{}" --cols16 darken '
-# WAL_COMMAND = 'wal -i "{}" --cols16 -n '
+
+CLEAR_CACHE_COMMAND = "rm -f /home/fenrir/.cache/wal/tmp/*"
+MATUGEN_COMMAND = "matugen image {} --mode dark --source-color-index 0 --old-json-output --json hex > ~/.cache/wal/colors.json"
+PYWAL_COMMAND = "wal -i {} --cols16 darken"
 MAGIC_COMMAND = 'magick "{}" /home/fenrir/.cache/usr/wall.png'
 COPY_COMMAND = 'magick "{}" "{}"'
 SWWW_COMMAND = (
     'awww img "{}" --transition-fps 60 --transition-type any --transition-duration 1.5'
 )
+QUICKSHELL_RELOAD = "qs ipc call TopBar forceReload"
+HYPRLAND_RELOAD = "hyprctl reload"
 
-
-def gif(file):
-    im = Image.open(file)
-    im.seek(0)
-    im.convert("RGB").save("/home/fenrir/.cache/usr/wall-back.png")
-    command = (
-        WAL_COMMAND.format("/home/fenrir/.cache/usr/wall-back.png")
-        + " && "
-        + MAGIC_COMMAND.format("/home/fenrir/.cache/usr/wall-back.png")
-        + " && "
-        + SWWW_COMMAND.format(file)
-    )
-    # command = SWWW_COMMAND.format(file, file)
-    print()
-    print(command)
-    print()
-    os.system(command)
-
-    os.system("rm -rf /home/fenrir/.cache/usr/wall-back.png")
-
-
-def image(file):
-
-    command = (
-        WAL_COMMAND.format(file)
-        + " && "
-        + MAGIC_COMMAND.format(file)
-        + " && "
-        + SWWW_COMMAND.format(file)
-    )
-
-    ret = os.system(command)
-
-    if ret != 0:
-        print("BIG FAILURE SOMEWHERE")
+WALLPAPER = "/home/fenrir/.cache/usr/wall.png"
 
 
 def main():
@@ -69,15 +40,25 @@ def main():
         print("Invalid file .. switching to default")
         file_path = DEFAULT_WAL
 
-    if file_path.split(".")[-1] == "gif":
-        gif(file_path)
-    else:
-        image(file_path)
-
+    # Copy BG to cache
     file_name = os.path.basename(file_path)
+    os.system(MAGIC_COMMAND.format(file_path, WALLPAPER))
+    print(file_path, file_name, WALLPAPER)
+
+    matu = os.system(MATUGEN_COMMAND.format(WALLPAPER))
+    pywal = os.system(PYWAL_COMMAND.format(WALLPAPER))
+    test = os.system("mv ~/.cache/wal/tmp/* ~/.cache/wal/")
+    hypr = os.system(HYPRLAND_RELOAD)
+    qs = os.system(QUICKSHELL_RELOAD)
+    sww = os.system(SWWW_COMMAND.format(WALLPAPER))
+    os.system(CLEAR_CACHE_COMMAND)
+    print(pywal, "\n")
+    print(hypr, "\n")
+    print(qs, "\n")
+    print(sww, "\n")
 
     wall_path = WALLPAPER_FOLDER + file_name
-    print(wall_path)
+
     if not os.path.isfile(wall_path):
         command = COPY_COMMAND.format(file_path, wall_path)
         ret = os.system(command)

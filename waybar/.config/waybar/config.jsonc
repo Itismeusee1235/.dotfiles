@@ -127,7 +127,7 @@
   "backlight": {
     // "device": "acpi_video1",
     "format": "{icon} {percent:>2}%",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "format-icons": ["", "", "", "", "", "", "", "", " "],
   },
 
   "network": {
@@ -300,7 +300,7 @@
     "format-charging": "󰂈  {capacity}%",
     "format-plugged": " {capacity}%",
     "format-alt": "{icon} {time}",
-    "format-icons": ["", "", "", "", ""],
+    "format-icons": [" ", " ", " ", " ", " "],
   },
 
   "backlight/slider": {

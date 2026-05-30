@@ -8,27 +8,25 @@ import QtQuick.Layouts
 Item {
     id: rightBar
 
-    property color colBg
-    property color colFg
-    property color colMuted
-    property color colCyan
-    property color colBlue
-    property color colYellow
-    property string fontFamily
-    property int fontSize
+    property var ui
+    property var theme
 
-    width: 300
+    width: 450
 
-    property string temprature: "100"
     property string battery: "100%"
     property string brightness: "100%"
     property string volume: "100%"
+    property string network: "disabled"
+    property string bluetooth: "disabled"
     property var muted: false
+
+    property color bgColor: Theme.secondary
+    property color fgColor: Theme.foreground
 
     Rectangle {
         anchors.fill: parent
-        opacity: 0.4
-        color: colFg
+        color: Theme.background
+        opacity: 0.75
         radius: 10
     }
 
@@ -40,43 +38,96 @@ Item {
         Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             RowLayout {
                 anchors.fill: parent
                 spacing: 5
 
+                //Network
                 Rectangle {
+                    id: networkRect
+
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredWidth: 2.5
                     radius: 5
+                    color: rightBar.bgColor
+                    opacity: 0.75
 
-                    color: colYellow
-                    opacity: 0.5
                     Text {
-                        id: tempText
+                        id: networkText
                         anchors.centerIn: parent
-                        text: temprature
+                        text: rightBar.network
+                        color: rightBar.fgColor
 
                         font {
-                            family: rightBar.fontFamily
-                            pixelSize: rightBar.fontSize
+                            family: theme.fontFamily
+                            pixelSize: theme.fontSize
+                            bold: true
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+                        onClicked: {
+                            networkToggle.running = true;
                         }
                     }
                 }
+
+                //Bluetooth
+                Rectangle {
+                    id: bluetoothRect
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: 2.5
+                    radius: 5
+
+                    color: rightBar.bgColor
+                    opacity: 0.75
+                    Text {
+                        id: bluetoothText
+                        anchors.centerIn: parent
+                        text: rightBar.bluetooth
+                        color: rightBar.fgColor
+
+                        font {
+                            family: theme.fontFamily
+                            pixelSize: theme.fontSize
+                            bold: true
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: {
+                            bluetoothToggle.running = true;
+                        }
+                    }
+                }
+
+                //Volume
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredWidth: 1.2
                     radius: 5
 
-                    color: colYellow
-                    opacity: 0.5
+                    color: rightBar.bgColor
+                    opacity: 0.75
                     Text {
                         id: volumeText
                         anchors.centerIn: parent
+                        color: rightBar.fgColor
                         text: volume
 
                         font {
-                            family: rightBar.fontFamily
-                            pixelSize: rightBar.fontSize
+                            family: theme.fontFamily
+                            pixelSize: theme.fontSize
+                            bold: true
                         }
                     }
 
@@ -85,39 +136,49 @@ Item {
                         onClicked: audioMute.running = true
                     }
                 }
+
+                //Brightness
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredWidth: 1.2
                     radius: 5
 
-                    color: colYellow
-                    opacity: 0.5
+                    color: rightBar.bgColor
+                    opacity: 0.75
                     Text {
                         id: brightnessText
                         anchors.centerIn: parent
+                        color: rightBar.fgColor
                         text: brightness
 
                         font {
-                            family: rightBar.fontFamily
-                            pixelSize: rightBar.fontSize
+                            family: theme.fontFamily
+                            pixelSize: theme.fontSize
+                            bold: true
                         }
                     }
                 }
+
+                //Battery
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredWidth: 1.2
                     radius: 5
 
-                    color: colYellow
-                    opacity: 0.5
+                    color: rightBar.bgColor
+                    opacity: 0.75
                     Text {
                         id: batteryText
                         anchors.centerIn: parent
+                        color: rightBar.fgColor
                         text: battery
 
                         font {
-                            family: rightBar.fontFamily
-                            pixelSize: rightBar.fontSize
+                            family: theme.fontFamily
+                            pixelSize: theme.fontSize
+                            bold: true
                         }
                     }
                 }
@@ -133,8 +194,8 @@ Item {
                 anchors.centerIn: parent
                 text: "󰐥"
                 font {
-                    family: rightBar.fontFamily
-                    pixelSize: rightBar.fontSize
+                    family: theme.fontFamily
+                    pixelSize: theme.fontSize + 2
                 }
             }
         }
@@ -184,7 +245,7 @@ Item {
                     if (text != "") {
                         try {
                             let data = JSON.parse(text);
-                            let newVol = data.volume.toString() + "% " + data.icon;
+                            let newVol = (data.volume.toString() + "% " + data.icon).trim();
                             if (newVol !== rightBar.volume)
                                 rightBar.volume = newVol;
                         } catch (e) {}
@@ -240,25 +301,91 @@ Item {
         }
 
         Process {
-            id: tempFetcher
-            command: ["zsh", "-c", "~/.config/quickshell/scripts/tempFetcher.sh"]
+            id: networkFetcher
+            running: true
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/networkFetcher.sh"]
+
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    console.log("Fetchign");
+                    let txt = this.text.trim();
+                    try {
+                        if (txt != "") {
+                            let data = JSON.parse(txt);
+                            if (data.status == "disabled") {
+                                rightBar.network = "Network off";
+                            } else if (data.ssid == "") {
+                                rightBar.network = "Disconnected " + data.icon;
+                            } else {
+                                rightBar.network = data.ssid + " " + data.icon;
+                            }
+                        } else {
+                            network = "ERROR";
+                        }
+                    } catch (e) {}
+                    networkWaiter.running = false;
+                    networkWaiter.running = true;
+                }
+            }
+        }
+
+        Process {
+            id: networkWaiter
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/networkWaiter.sh"]
+            onExited: {
+                networkFetcher.running = false;
+                networkFetcher.running = true;
+            }
+        }
+
+        Process {
+            id: networkToggle
+            command: ["zsh", "-c", "~/.config/quickshell/scripts/networkFetcher.sh --toggle"]
+            running: false
+        }
+
+        Process {
+            id: bluetoothToggle
+            command: ["zsh", "-c", "/home/fenrir/.config/quickshell/scripts/bluetoothFetcher.sh --toggle"]
+            running: false
+        }
+
+        Process {
+            id: bluetoothFetcher
+            command: ["zsh", "-c", "/home/fenrir/.config/quickshell/scripts/bluetoothFetcher.sh"]
             running: true
 
             stdout: StdioCollector {
                 onStreamFinished: {
                     let txt = this.text.trim();
-                    rightBar.temprature = " " + txt;
+                    try {
+                        if (txt != "") {
+                            let data = JSON.parse(txt);
+                            if (data.status == "off") {
+                                rightBar.bluetooth = "Bluetooth off";
+                            } else if (data.connected == "Disconnected") {
+                                rightBar.bluetooth = "Disconnected";
+                            } else {
+                                rightBar.bluetooth = data.connected + " " + data.icon;
+                            }
+                        } else {
+                            rightBar.bluetooth = "ERROR";
+                        }
+                        rightBar.bluetooth = data.connected;
+                        console.log("BT " + data.connected);
+                    } catch (e) {}
+                    bluetoothWaiter.running = false;
+                    bluetoothWaiter.running = true;
                 }
             }
         }
+        Process {
+            id: bluetoothWaiter
+            command: ["zsh", "-c", "/home/fenrir/.config/quickshell/scripts/bluetoothWaiter.sh"]
 
-        Timer {
-            interval: 1000
-            running: true
-            repeat: true
-
-            onTriggered: {
-                tempFetcher.running = true;
+            onExited: {
+                bluetoothFetcher.running = false;
+                bluetoothFetcher.running = true;
             }
         }
     }
