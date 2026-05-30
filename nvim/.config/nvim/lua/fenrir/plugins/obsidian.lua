@@ -99,8 +99,10 @@ return {
 		---@param spec {id: string, dir: obsidian.Path, title: string|?}
 		---@return string|obsidian.Path
 		note_path_func = function(spec)
-			local path = spec.dir / tostring(spec.id)
-			return path:with_suffix(".md")
+			local cwd = vim.fn.getcwd()
+			local path = require("obsidian.path").new(cwd) / (spec.id .. ".md")
+			-- print(path)
+			return path
 		end,
 
 		wiki_link_func = "use_alias_only",
