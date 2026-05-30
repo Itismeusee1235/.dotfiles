@@ -57,12 +57,23 @@ return {
 					return { buffer = bufnr, noremap = true, silent = true, desc = desc }
 				end
 				vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open file/folder"))
-				vim.keymap.set("n", "e<CR>", function()
+				vim.keymap.set("n", "r<CR>", function()
 					local node = api.tree.get_node_under_cursor()
 
 					if node.type == "directory" then
 						api.tree.change_root_to_node(node)
 						vim.cmd("lcd " .. vim.fn.fnameescape(node.absolute_path))
+					else
+						api.node.open.edit()
+					end
+				end, opts("Enter Directory"))
+
+				vim.keymap.set("n", "e<CR>", function()
+					local node = api.tree.get_node_under_cursor()
+
+					if node.type == "directory" then
+						vim.cmd("lcd " .. vim.fn.fnameescape(node.absolute_path))
+						api.node.open.edit()
 					else
 						api.node.open.edit()
 					end
