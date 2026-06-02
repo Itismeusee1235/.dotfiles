@@ -105,10 +105,10 @@ return {
 			return path
 		end,
 
-		wiki_link_func = "use_alias_only",
-		-- wiki_link_func = function(opts)
-		-- 	return require("obsidian.util").wiki_link_id_prefix(opts)
-		-- end,
+		-- wiki_link_func = "use_alias_only",
+		wiki_link_func = function(opts)
+			return require("obsidian.util").wiki_link_id_prefix(opts)
+		end,
 
 		markdown_link_func = function(opts)
 			return require("obsidian.util").markdown_link(opts)
@@ -136,6 +136,43 @@ return {
 			search_max_lines = 1000,
 			open_notes_in = "vsplit",
 		},
+
+		-- attachments = {
+		-- 	img_folder = "Assets/Images",
+		--
+		-- 	--@return string
+		-- 	img_name_func = function()
+		-- 		return string.format("%s-", os.time())
+		-- 	end,
+		--
+		-- 	--@param client obsidian.Client
+		-- 	---@param path obsidian.Path the absolute path to the image file
+		-- 	---@return string
+		-- 	img_text_func = function(client, path)
+		-- 		path = client:vault_relative_path(path) or path
+		-- 		return string.format("![%s](%s)", path.name:gsub(" ", "_"), path)
+		-- 	end,
+		-- },
+		attachments = {
+			img_folder = "Assets/Images",
+
+			img_name_func = function()
+				-- get user input
+				local input = vim.fn.input("Image name: ")
+
+				-- replace spaces → _
+				input = input:gsub("%s+", "_")
+
+				-- remove weird chars (optional but good)
+				input = input:gsub("[^%w%._-]", "")
+
+				return os.date("%Y-%m-%d_%H-%M-%S") .. "-" .. input
+			end,
+
+			img_text_func = function(_, path)
+				return string.format("![[%s]]", path.name)
+			end,
+		},
 	},
 
 	config = function(_, opts)
@@ -151,5 +188,6 @@ return {
 		keymap.set("v", "<leader>ol", "<cmd>ObsidianLinkNew<CR>", { desc = "Converts text to empty new note" })
 		keymap.set("v", "<leader>ox", "<cmd>ObsidianExtractNote<CR>", { desc = "Puts text into new note" })
 		keymap.set("n", "<leader>or", "<cmd>ObsidianRename<CR>", { desc = "Rename" })
+		keymap.set("n", "<leader>op", "<cmd>ObsidianPasteImg<CR>", { desc = "Paste Image" })
 	end,
 }

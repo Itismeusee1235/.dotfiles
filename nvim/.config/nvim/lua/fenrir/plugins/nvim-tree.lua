@@ -52,6 +52,7 @@ return {
 
 			on_attach = function(bufnr)
 				local api = require("nvim-tree.api")
+				api.config.mappings.default_on_attach(bufnr)
 
 				local function opts(desc)
 					return { buffer = bufnr, noremap = true, silent = true, desc = desc }
@@ -61,8 +62,8 @@ return {
 					local node = api.tree.get_node_under_cursor()
 
 					if node.type == "directory" then
+						vim.cmd("cd " .. vim.fn.fnameescape(node.absolute_path))
 						api.tree.change_root_to_node(node)
-						vim.cmd("lcd " .. vim.fn.fnameescape(node.absolute_path))
 					else
 						api.node.open.edit()
 					end
@@ -72,7 +73,7 @@ return {
 					local node = api.tree.get_node_under_cursor()
 
 					if node.type == "directory" then
-						vim.cmd("lcd " .. vim.fn.fnameescape(node.absolute_path))
+						vim.cmd("cd " .. vim.fn.fnameescape(node.absolute_path))
 						api.node.open.edit()
 					else
 						api.node.open.edit()
